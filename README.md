@@ -147,6 +147,6 @@ val debugSettings = ConsentDebugSettings.Builder(it)
 ```
 
 ## ✅ Done!
-## You’ve now implemented Google’s UMP Consent Form in your app with clean separation of concerns and Hilt support.
+### You’ve now implemented Google’s UMP Consent Form in your app with clean separation of concerns and Hilt support.
 
 
