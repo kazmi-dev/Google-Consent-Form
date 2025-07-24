@@ -79,4 +79,74 @@ class MyApp : Application()
 </application>
 ```
 
+## 📜 Initilization
+Initialize UMP in your activity as below:
+
+```initialize
+@Inject latinit var googleConsentFormManager: GoogleConsentFormManager
+```
+
+### 1. Implement UmpCallbacks in your activity or fragment:
+
+```callbacks
+class MainActivity : AppCompatActivity(), GoogleConsentFormManager.UmpCallbacks {
+
+    override fun onRequestAds() {
+        // Consent is gathered — load ads now
+    }
+
+    override fun onConsentFormError(error: String) {
+        // Handle any error that occurred
+        Log.e("ConsentError", error)
+    }
+}
+```
+
+### 2. Request Consent:
+
+```request
+consentManager.setConsentCallbacks(this)
+consentManager.gatherConsentIfAvailable(this) { consentGiven ->
+    Log.d("ConsentResult", "Consent gathered: $consentGiven")
+}
+```
+
+### 3. Optional – Show Privacy Options Manually:
+
+```optional
+consentManager.showPrivacyOptionsForm(this) { formError ->
+    Log.e("PrivacyFormError", "Error: ${formError.message}")
+}
+```
+
+### 4. Optional – Reset Consent (Debug/Test Mode Only):
+
+```debug cancel
+consentManager.consentReset()
+```
+## 🧪 Debug Mode Setup
+To test consent form in debug mode (EEA simulation)
+
+### 1. Generate your hashed device ID using this code:
+
+```debug
+val id = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+val hashed = MessageDigest.getInstance("MD5").digest(id.toByteArray()).joinToString("") {
+    "%02x".format(it)
+}
+Log.d("DeviceHash", hashed)
+```
+
+### 2. Replace "YOUR-DEVICE-HASHED-ID" in the manager class with your hashed ID.
+
+```replace
+val debugSettings = ConsentDebugSettings.Builder(it)
+    .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
+    .addTestDeviceHashedId("YOUR-DEVICE-HASHED-ID")
+    .build()
+```
+
+#✅ Done!
+## You’ve now implemented Google’s UMP Consent Form in your app with clean separation of concerns and Hilt support.
+
 
