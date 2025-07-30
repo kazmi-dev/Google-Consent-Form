@@ -1,4 +1,4 @@
-# 📜 Google Consent Form GDPR Implementation
+# 📜 Google Consent Form GDPR/EEA Implementation
 
 This is a lightweight Kotlin-based utility class to easily implement **Google UMP (User Messaging Platform)** Consent Form for GDPR/EEA compliance in your Android apps.
 
